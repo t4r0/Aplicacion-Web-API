@@ -12,7 +12,7 @@ def lista_objetos(request):
     """
     if request.method == 'GET':
         objeto = TxdDuenio.objects.all()
-        serializador = TxdDuenioS(objetos, many=True)
+        serializador = TxdDuenioS(objeto, many=True)
         return Response(serializador.data)
 
     elif request.method == 'POST':
@@ -28,7 +28,7 @@ def detalle_objetos(request, pk):
     Actuliza, elimina un objeto segun su id
     """
     try:
-        objeto = Leyes.objects.get(pk=pk)
+        objeto = TxdDuenio.objects.get(pk=pk)
     except objeto.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
