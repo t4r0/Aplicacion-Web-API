@@ -17,11 +17,15 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework import routers
 from rest_framework.urlpatterns import format_suffix_patterns
-from app.vistas import vistaDuenio
+from app.vistas import vistaDuenio, vistaRuta, vistaHorario
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^duenio/$', vistaDuenio.lista_objetos),
     url(r'^duenio/(?P<pk>[0-9]+)$', vistaDuenio.detalle_objetos),
+    url(r'^ruta/$', vistaRuta.lista_objetos),
+    url(r'^ruta/(?P<pk>[0-9]+)$', vistaRuta.detalle_objetos),
+    url(r'^horario/$', vistaHorario.lista_objetos),
+    url(r'^horario/(?P<pk>[0-9]+)$', vistaHorario.detalle_objetos),
     #url(r'^snippets/(?P<pk>[0-9]+)$', views.snippet_detail),
 ]
