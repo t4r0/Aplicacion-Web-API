@@ -72,11 +72,3 @@ class TxdRutaS(serializers.ModelSerializer):
 class TxdTipodenunciaS(serializers.ModelSerializer):
     class Meta:
         model = models.TxdTipodenuncia
-
-class UsrUsuarioS(serializers.ModelSerializer):
-    class Meta:
-        model = models.UsrUsuario
-
-class UsrRolS(serializers.ModelSerializer):
-    class Meta:
-        model = models.UsrRol
