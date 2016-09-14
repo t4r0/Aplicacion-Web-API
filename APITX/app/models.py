@@ -20,8 +20,26 @@ class TxcActividad(models.Model):
     direccion = models.TextField(blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'txc_actividad'
+
+
+class TxcTitulo(models.Model):
+    idtitulo = models.AutoField(db_column='idTitulo', primary_key=True)  # Field name made lowercase.
+    titulo = models.CharField(max_length=100, blank=True, null=True)
+    numero = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        db_table = 'txc_titulo'
+
+
+class TxcCapitulo(models.Model):
+    idcapitulo = models.AutoField(db_column='idCapitulo', primary_key=True)  # Field name made lowercase.
+    titulo = models.CharField(max_length=100, blank=True, null=True)
+    numero = models.IntegerField(blank=True, null=True)
+    titulo_0 = models.ForeignKey(TxcTitulo, models.DO_NOTHING, db_column='Titulo_id')  # Field name made lowercase. Field renamed because of name conflict.
+
+    class Meta:
+        db_table = 'txc_capitulo'
 
 
 class TxcArticulo(models.Model):
@@ -29,22 +47,10 @@ class TxcArticulo(models.Model):
     descripcion = models.TextField()
     numero = models.IntegerField(blank=True, null=True)
     titulo = models.CharField(max_length=100, blank=True, null=True)
-    capitulo = models.ForeignKey('TxcCapitulo', models.DO_NOTHING, db_column='Capitulo_id')  # Field name made lowercase.
+    capitulo = models.ForeignKey(TxcCapitulo, models.DO_NOTHING, db_column='Capitulo_id')  # Field name made lowercase.
 
     class Meta:
-        managed = False
         db_table = 'txc_articulo'
-
-
-class TxcCapitulo(models.Model):
-    idcapitulo = models.AutoField(db_column='idCapitulo', primary_key=True)  # Field name made lowercase.
-    titulo = models.CharField(max_length=100, blank=True, null=True)
-    numero = models.IntegerField(blank=True, null=True)
-    titulo_0 = models.ForeignKey('TxcTitulo', models.DO_NOTHING, db_column='Titulo_id')  # Field name made lowercase. Field renamed because of name conflict.
-
-    class Meta:
-        managed = False
-        db_table = 'txc_capitulo'
 
 
 class TxcPregunta(models.Model):
@@ -53,7 +59,6 @@ class TxcPregunta(models.Model):
     respuesta = models.TextField(blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'txc_pregunta'
 
 
@@ -63,18 +68,48 @@ class TxcPreguntaarticulo(models.Model):
     articulo = models.ForeignKey(TxcArticulo, models.DO_NOTHING, db_column='Articulo_id')  # Field name made lowercase.
 
     class Meta:
-        managed = False
         db_table = 'txc_preguntaarticulo'
 
 
-class TxcTitulo(models.Model):
-    idtitulo = models.IntegerField(db_column='idTitulo', primary_key=True)  # Field name made lowercase.
-    titulo = models.CharField(max_length=100, blank=True, null=True)
-    numero = models.IntegerField(blank=True, null=True)
+class TxcoConsejo(models.Model):
+    idconsejo = models.AutoField(db_column='idConsejo', primary_key=True)  # Field name made lowercase.
+    consejo = models.TextField(blank=True, null=True)
 
     class Meta:
-        managed = False
-        db_table = 'txc_titulo'
+        db_table = 'txco_consejo'
+
+
+class TxcoFecha(models.Model):
+    idfecha = models.AutoField(db_column='idFecha', primary_key=True)  # Field name made lowercase.
+    fecha = models.DateField(blank=True, null=True)
+    consejo = models.ForeignKey(TxcoConsejo, models.DO_NOTHING, db_column='Consejo_id')  # Field name made lowercase.
+
+    class Meta:
+        db_table = 'txco_fecha'
+
+
+class TxdDuenio(models.Model):
+    idduenio = models.AutoField(db_column='idDuenio', primary_key=True)  # Field name made lowercase.
+    nombre = models.CharField(max_length=45)
+    apellidos = models.CharField(max_length=45)
+    direccion = models.CharField(max_length=45)
+    dpi = models.IntegerField()
+    telefono = models.IntegerField(blank=True, null=True)
+    correo = models.CharField(max_length=45, blank=True, null=True)
+    foto = models.CharField(max_length=100)
+    estado = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        db_table = 'txd_duenio'
+
+
+class TxdRuta(models.Model):
+    idruta = models.AutoField(db_column='idRuta', primary_key=True)  # Field name made lowercase.
+    nombre = models.CharField(max_length=45, blank=True, null=True)
+    recorrido = models.TextField(blank=True, null=True)
+
+    class Meta:
+        db_table = 'txd_ruta'
 
 
 class TxdBus(models.Model):
@@ -86,12 +121,11 @@ class TxdBus(models.Model):
     numbus = models.IntegerField()
     observaciones = models.TextField(blank=True, null=True)
     foto = models.CharField(max_length=100, blank=True, null=True)
-    duenio = models.ForeignKey('TxdDuenio', models.DO_NOTHING, db_column='Duenio_id')  # Field name made lowercase.
-    ruta = models.ForeignKey('TxdRuta', models.DO_NOTHING, db_column='Ruta_id')  # Field name made lowercase.
+    duenio = models.ForeignKey(TxdDuenio, models.DO_NOTHING, db_column='Duenio_id')  # Field name made lowercase.
+    ruta = models.ForeignKey(TxdRuta, models.DO_NOTHING, db_column='Ruta_id')  # Field name made lowercase.
     estado = models.IntegerField(blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'txd_bus'
 
 
@@ -108,25 +142,31 @@ class TxdChofer(models.Model):
     tipolicencia = models.CharField(db_column='tipoLicencia', max_length=2, blank=True, null=True)  # Field name made lowercase.
     nolicencia = models.IntegerField(db_column='noLicencia', blank=True, null=True)  # Field name made lowercase.
     estado = models.IntegerField(blank=True, null=True)
-    duenio = models.ForeignKey('TxdDuenio', models.DO_NOTHING, db_column='Duenio_id')  # Field name made lowercase.
+    duenio = models.ForeignKey(TxdDuenio, models.DO_NOTHING, db_column='Duenio_id')  # Field name made lowercase.
 
     class Meta:
-        managed = False
         db_table = 'txd_chofer'
 
 
+class TxdTipodenuncia(models.Model):
+    idtipodenuncia = models.AutoField(db_column='idTipodenuncia', primary_key=True)  # Field name made lowercase.
+    descripcion = models.CharField(max_length=100, blank=True, null=True)
+
+    class Meta:
+        db_table = 'txd_tipodenuncia'
+
+
 class TxdDenuncia(models.Model):
-    iddenuncia = models.BigIntegerField(db_column='idDenuncia', primary_key=True)  # Field name made lowercase.
+    iddenuncia = models.BigAutoField(db_column='idDenuncia', primary_key=True)  # Field name made lowercase.
     idhash = models.CharField(max_length=50, blank=True, null=True)
     descripcion = models.TextField(blank=True, null=True)
     estado = models.IntegerField(blank=True, null=True)
     fechahora = models.DateTimeField(blank=True, null=True)
-    tipodenuncia = models.ForeignKey('TxdTipodenuncia', models.DO_NOTHING, db_column='Tipodenuncia_id')  # Field name made lowercase.
+    tipodenuncia = models.ForeignKey(TxdTipodenuncia, models.DO_NOTHING, db_column='Tipodenuncia_id')  # Field name made lowercase.
     placa = models.CharField(max_length=7, blank=True, null=True)
     chofer = models.ForeignKey(TxdChofer, models.DO_NOTHING, db_column='Chofer_id', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
-        managed = False
         db_table = 'txd_denuncia'
 
 
@@ -135,17 +175,25 @@ class TxdDia(models.Model):
     nombre = models.CharField(max_length=10)
 
     class Meta:
-        managed = False
         db_table = 'txd_dia'
+
+
+class TxdHorario(models.Model):
+    idhorario = models.AutoField(db_column='idHorario', primary_key=True)  # Field name made lowercase.
+    horainicio = models.TimeField()
+    horafin = models.TimeField()
+    duenio = models.ForeignKey(TxdDuenio, models.DO_NOTHING, db_column='Duenio_id')  # Field name made lowercase.
+
+    class Meta:
+        db_table = 'txd_horario'
 
 
 class TxdDiahorario(models.Model):
     iddiahorario = models.AutoField(db_column='idDiaHorario', primary_key=True)  # Field name made lowercase.
-    horario = models.ForeignKey('TxdHorario', models.DO_NOTHING, db_column='Horario_id')  # Field name made lowercase.
+    horario = models.ForeignKey(TxdHorario, models.DO_NOTHING, db_column='Horario_id')  # Field name made lowercase.
     dia = models.ForeignKey(TxdDia, models.DO_NOTHING, db_column='Dia_id')  # Field name made lowercase.
 
     class Meta:
-        managed = False
         db_table = 'txd_diahorario'
 
 
@@ -156,35 +204,7 @@ class TxdDiahorariodetalle(models.Model):
     diahorario = models.ForeignKey(TxdDiahorario, models.DO_NOTHING, db_column='DiaHorario_id')  # Field name made lowercase.
 
     class Meta:
-        managed = False
         db_table = 'txd_diahorariodetalle'
-
-
-class TxdDuenio(models.Model):
-    idduenio = models.AutoField(db_column='idDuenio', primary_key=True)  # Field name made lowercase.
-    nombre = models.CharField(max_length=45)
-    apellidos = models.CharField(max_length=45)
-    direccion = models.CharField(max_length=45)
-    dpi = models.IntegerField()
-    telefono = models.IntegerField(blank=True, null=True)
-    correo = models.CharField(max_length=45, blank=True, null=True)
-    foto = models.CharField(max_length=100)
-    estado = models.IntegerField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'txd_duenio'
-
-
-class TxdHorario(models.Model):
-    idhorario = models.AutoField(db_column='idHorario', primary_key=True)  # Field name made lowercase.
-    horainicio = models.TimeField()
-    horafin = models.TimeField()
-    duenio = models.ForeignKey(TxdDuenio, models.DO_NOTHING, db_column='Duenio_id')  # Field name made lowercase.
-
-    class Meta:
-        managed = False
-        db_table = 'txd_horario'
 
 
 class TxdRecurso(models.Model):
@@ -193,30 +213,18 @@ class TxdRecurso(models.Model):
     denuncia = models.ForeignKey(TxdDenuncia, models.DO_NOTHING, db_column='Denuncia_id')  # Field name made lowercase.
 
     class Meta:
-        managed = False
         db_table = 'txd_recurso'
 
 
-class TxdRuta(models.Model):
-    idruta = models.IntegerField(db_column='idRuta', primary_key=True)  # Field name made lowercase.
-    nombre = models.CharField(max_length=45, blank=True, null=True)
-    recorrido = models.TextField(blank=True, null=True)
+class TxuRol(models.Model):
+    idrol = models.AutoField(db_column='idRol', primary_key=True)  # Field name made lowercase.
+    rol = models.CharField(max_length=45, blank=True, null=True)
 
     class Meta:
-        managed = False
-        db_table = 'txd_ruta'
+        db_table = 'txu_rol'
 
 
-class TxdTipodenuncia(models.Model):
-    idtipodenuncia = models.IntegerField(db_column='idTipodenuncia', primary_key=True)  # Field name made lowercase.
-    descripcion = models.CharField(max_length=100, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'txd_tipodenuncia'
-
-
-class UsrPersona(models.Model):
+class TxuUsuario(models.Model):
     idpersona = models.AutoField(db_column='idPersona', primary_key=True)  # Field name made lowercase.
     nombre = models.IntegerField(blank=True, null=True)
     direccion = models.CharField(max_length=45, blank=True, null=True)
@@ -224,28 +232,9 @@ class UsrPersona(models.Model):
     correo = models.CharField(max_length=45, blank=True, null=True)
     dpi = models.CharField(max_length=13, blank=True, null=True)
     estado = models.IntegerField(blank=True, null=True)
-    rol = models.ForeignKey('UsrRol', models.DO_NOTHING, db_column='Rol_id')  # Field name made lowercase.
-    usuario = models.ForeignKey('UsrUsuario', models.DO_NOTHING, db_column='Usuario_id')  # Field name made lowercase.
-
-    class Meta:
-        managed = False
-        db_table = 'usr_persona'
-
-
-class UsrRol(models.Model):
-    usr_rol = models.AutoField(db_column='Usr_Rol', primary_key=True)  # Field name made lowercase.
-    rol = models.CharField(max_length=45, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'usr_rol'
-
-
-class UsrUsuario(models.Model):
-    idusuario = models.IntegerField(db_column='idUsuario', primary_key=True)  # Field name made lowercase.
     usuario = models.CharField(max_length=45, blank=True, null=True)
     contrasenia = models.CharField(max_length=45, blank=True, null=True)
+    rol = models.ForeignKey(TxuRol, models.DO_NOTHING, db_column='Rol_id')  # Field name made lowercase.
 
     class Meta:
-        managed = False
-        db_table = 'usr_usuario'
+        db_table = 'txu_usuario'
