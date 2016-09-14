@@ -17,7 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework import routers
 from rest_framework.urlpatterns import format_suffix_patterns
-from app.vistas import vistaDuenio, vistaRuta, vistaHorario, vistaDenuncia, vistaTipodenuncia, vistaActividad
+from app.vistas import vistaDuenio, vistaRuta, vistaHorario, vistaDenuncia, vistaTipodenuncia, vistaActividad,vistaConsejo, vistaFechaConsejo
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -36,5 +36,8 @@ urlpatterns = [
     #url(r'^snippets/(?P<pk>[0-9]+)$', views.snippet_detail),
     url(r'^cultura/$', vistaActividad.lista_objetos),
     url(r'^cultura/(?P<pk>[0-9]+)$', vistaActividad.detalle_objetos),
-
+    url(r'^cultura/consejo$', vistaConsejo.lista_objetos),
+    url(r'^cultura/consejo(?P<pk>[0-9]+)$', vistaConsejo.detalle_objetos),
+    url(r'^cultura/fechaCon$', vistaFechaConsejo.lista_objetos),
+    url(r'^cultura/fechaCon(?P<pk>[0-9]+)$', vistaFechaConsejo.detalle_objetos),
 ]
