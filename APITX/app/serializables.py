@@ -72,3 +72,9 @@ class TxdRutaS(serializers.ModelSerializer):
 class TxdTipodenunciaS(serializers.ModelSerializer):
     class Meta:
         model = models.TxdTipodenuncia
+class TxcoConsejoS(serializers.ModelSerializer):
+    class Meta:
+        model = models.TxcoConsejo
+class TxcoFechaS(serializers.ModelSerializer):
+    class Meta:
+        model = models.TxcoFecha
