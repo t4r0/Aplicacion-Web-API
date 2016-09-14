@@ -4,13 +4,15 @@ from rest_framework.response import Response
 from app.models import TxcActividad
 from app.serializables import TxcActividadS
 
+
 @api_view(['GET', 'POST'])
 def lista_objetos(request):
     """
     Lista de todas las actividades, o crear una nueva
     """
     if request.method == 'GET':
-        objeto = TxcActividad(objeto, many=True)
+        objeto = TxcActividad.objects.all()
+        serializador = TxcActividadS(objeto, many=True)
         return Response(serializador.data)
 
     elif request.method == 'POST':
@@ -42,4 +44,4 @@ def detalle_objetos(request, pk):
 
     elif request.method == 'DELETE':
         objeto.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT) 
+        return Response(status=status.HTTP_204_NO_CONTENT)

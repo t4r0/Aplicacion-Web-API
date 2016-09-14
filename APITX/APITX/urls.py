@@ -17,7 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework import routers
 from rest_framework.urlpatterns import format_suffix_patterns
-from app.vistas import vistaDuenio, vistaRuta, vistaHorario, vistaDenuncia, vistaTipodenuncia
+from app.vistas import vistaDuenio, vistaRuta, vistaHorario, vistaDenuncia, vistaTipodenuncia, vistaActividad
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -34,4 +34,7 @@ urlpatterns = [
     #url(r'^tipodiahorariodetalle/$', vistadiahorariodetalle.lista_objetos),
     #url(r'^tipodiahorariodetalle/(?P<pk>[0-9]+)$', vistadiahorariodetalle.detalle_objetos),
     #url(r'^snippets/(?P<pk>[0-9]+)$', views.snippet_detail),
+    url(r'^cultura/$', vistaActividad.lista_objetos),
+    url(r'^cultura/(?P<pk>[0-9]+)$', vistaActividad.detalle_objetos),
+
 ]
