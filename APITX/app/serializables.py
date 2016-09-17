@@ -32,17 +32,15 @@ class TxcPreguntaarticuloS(serializers.ModelSerializer):
 class TxcTituloS(serializers.ModelSerializer):
     class Meta:
         model = models.TxcTitulo
-<<<<<<< HEAD
 
-class TxdBusS(serializers.ModelSerializer):
-=======
 class TxcPreguntaS(serializers.ModelSerializer):
     class Meta:
         model = models.TxcPregunta
-class TxdBus(serializers.ModelSerializer):
->>>>>>> origin/master
+
+class TxdBusS(serializers.ModelSerializer):
     class Meta:
         model = models.TxdBus
+        
 class  TxdChoferS(serializers.ModelSerializer):
     class Meta:
         model = models.TxdChofer
