@@ -32,7 +32,9 @@ class TxcPreguntaarticuloS(serializers.ModelSerializer):
 class TxcTituloS(serializers.ModelSerializer):
     class Meta:
         model = models.TxcTitulo
-
+class TxcPreguntaS(serializers.ModelSerializer):
+    class Meta:
+        model = models.TxcPregunta
 class TxdBus(serializers.ModelSerializer):
     class Meta:
         model = models.TxdBus
