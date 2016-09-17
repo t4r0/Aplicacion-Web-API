@@ -17,14 +17,21 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework import routers
 from rest_framework.urlpatterns import format_suffix_patterns
-from app.vistas import vistaDuenio, vistaRuta, vistaHorario, vistaDenuncia, vistaTipodenuncia, vistaActividad,vistaConsejo, vistaFechaConsejo
+from app.vistas import vistaDuenio, vistaRuta, vistaHorario, vistaDenuncia, vistaTipodenuncia, vistaActividad,vistaConsejo, vistaFechaConsejo, vistaBus, vistaDia, vistaRecurso
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^duenio/$', vistaDuenio.lista_objetos),
     url(r'^duenio/(?P<pk>[0-9]+)$', vistaDuenio.detalle_objetos),
+    url(r'^duenio/(?P<pk>[0-9]+)/principal/$', vistaDuenio.principal_duenio),
     url(r'^ruta/$', vistaRuta.lista_objetos),
     url(r'^ruta/(?P<pk>[0-9]+)$', vistaRuta.detalle_objetos),
+    url(r'^bus/$', vistaBus.lista_objetos),
+    url(r'^bus/(?P<pk>[0-9]+)$', vistaBus.detalle_objetos),
+    url(r'^dia/$', vistaDia.lista_objetos),
+    url(r'^dia/(?P<pk>[0-9]+)$', vistaDia.detalle_objetos),
+    url(r'^recurso/$', vistaRecurso.lista_objetos),
+    url(r'^recurso/(?P<pk>[0-9]+)$', vistaRecurso.detalle_objetos),
     url(r'^horario/$', vistaHorario.lista_objetos),
     url(r'^horario/(?P<pk>[0-9]+)$', vistaHorario.detalle_objetos),
     url(r'^denuncia/$', vistaDenuncia.lista_objetos),

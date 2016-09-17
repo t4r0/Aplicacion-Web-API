@@ -33,9 +33,12 @@ class TxcTituloS(serializers.ModelSerializer):
     class Meta:
         model = models.TxcTitulo
 
-class TxdBus(serializers.ModelSerializer):
+class TxdBusS(serializers.ModelSerializer):
     class Meta:
         model = models.TxdBus
+class  TxdChoferS(serializers.ModelSerializer):
+    class Meta:
+        model = models.TxdChofer
 
 class TxdDenunciaS(serializers.ModelSerializer):
     class Meta:
@@ -56,6 +59,12 @@ class TxdDiahorariodetalleS(serializers.ModelSerializer):
 class TxdDuenioS(serializers.ModelSerializer):
     class Meta:
         model = models.TxdDuenio
+class DueniosChoferBuses(serializers.ModelSerializer):
+    choferes = TxdChoferS(many=True, read_only=True, source='txdchofer_set')
+    buses = TxdBusS(many=True, read_only=True, source='txdbus_set')
+    class Meta:
+        model = models.TxdDuenio
+        fields = ('idduenio','choferes','buses')
 
 class TxdHorarioS(serializers.ModelSerializer):
     class Meta:
