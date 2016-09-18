@@ -40,7 +40,7 @@ class TxcPreguntaS(serializers.ModelSerializer):
 class TxdBusS(serializers.ModelSerializer):
     class Meta:
         model = models.TxdBus
-        
+
 class  TxdChoferS(serializers.ModelSerializer):
     class Meta:
         model = models.TxdChofer
@@ -70,6 +70,18 @@ class DueniosChoferBuses(serializers.ModelSerializer):
     class Meta:
         model = models.TxdDuenio
         fields = ('idduenio','choferes','buses')
+
+class DueniosChoferes(serializers.ModelSerializer):
+    choferes = TxdChoferS(many=True, read_only=True, source='txdchofer_set')
+    class Meta:
+        model = models.TxdDuenio
+        fields = ('idduenio','choferes')
+
+class DueniosHorarios(serializers.ModelSerializer):
+    horarios = TxdHorarioS(many=True, read_only=True, source='txdhorario_set')
+    class Meta:
+        model = models.TxdDuenio
+        fields = ('idduenio','horarios')
 
 class TxdHorarioS(serializers.ModelSerializer):
     class Meta:
