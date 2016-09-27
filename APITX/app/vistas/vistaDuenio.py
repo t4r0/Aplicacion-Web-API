@@ -49,9 +49,7 @@ def principal_duenio(request,pk):
 
 @api_view(['GET'])
 def choferes_duenio(request,pk):
-    """
-    Lista los choferes segun dueño
-    """
+
     try:
         objeto = TxdDuenio.objects.get(pk=pk)
     except objeto.DoesNotExist:
@@ -74,9 +72,7 @@ def choferes_duenio(request,pk):
 
 @api_view(['GET'])
 def horarios_duenio(request,pk):
-    """
-    Lista los choferes segun dueño
-    """
+    
     try:
         objeto = TxdDuenio.objects.get(pk=pk)
     except objeto.DoesNotExist:

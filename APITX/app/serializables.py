@@ -77,15 +77,14 @@ class DueniosChoferes(serializers.ModelSerializer):
         model = models.TxdDuenio
         fields = ('idduenio','choferes')
 
+class TxdHorarioS(serializers.ModelSerializer):
+    class Meta:
+        model = models.TxdHorario
 class DueniosHorarios(serializers.ModelSerializer):
     horarios = TxdHorarioS(many=True, read_only=True, source='txdhorario_set')
     class Meta:
         model = models.TxdDuenio
         fields = ('idduenio','horarios')
-
-class TxdHorarioS(serializers.ModelSerializer):
-    class Meta:
-        model = models.TxdHorario
 
 class TxdRecursoS(serializers.ModelSerializer):
     class Meta:
