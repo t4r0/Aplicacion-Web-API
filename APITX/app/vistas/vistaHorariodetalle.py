@@ -1,21 +1,22 @@
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from app.models import TxdDiahorario
-from app.serializables import TxdDiahorarioS
+from app.models import TxdHorariodetalle
+from app.serializables import TxdHorariodetalleS
+
 
 @api_view(['GET', 'POST'])
 def lista_objetos(request):
     """
-    Lista de todos los choferes, o crea uno nuevo
+    Lista de todos los Horariodetalles, o crea uno nuevo.
     """
     if request.method == 'GET':
-        objeto = TxdDiahorario.objects.all()
-        serializador = TxdDiahorarioS(objeto, many = true)
+        objeto = TxdHorariodetalle.objects.all()
+        serializador = TxdHorariodetalleS(objeto, many=True)
         return Response(serializador.data)
 
     elif request.method == 'POST':
-        serializador = TxdDiahorarioS(data = request.data)
+        serializador = TxdHorariodetalleS(data=request.data)
         if serializador.is_valid():
             serializador.save()
             return Response(serializador.data, status=status.HTTP_201_CREATED)
@@ -24,19 +25,19 @@ def lista_objetos(request):
 @api_view(['GET', 'PUT', 'DELETE'])
 def detalle_objetos(request, pk):
     """
-    Actuliza o elimina o chofer segun su id
+    Actuliza, elimina un objeto segun su id
     """
     try:
-        objeto = TxdDiahorario.objects.get(pk=pk)
+        objeto = TxdHorariodetalle.objects.get(pk=pk)
     except objeto.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializador = TxdDiahorarioS(objeto)
+        serializador = TxdHorariodetalleS(objeto)
         return Response(serializador.data)
 
     elif request.method == 'PUT':
-        serializador = TxdDiahorarioS(objeto, data=request.data)
+        serializador = TxdHorariodetalleS(objeto, data=request.data)
         if serializador.is_valid():
             serializador.save()
             return Response(serializador.data)

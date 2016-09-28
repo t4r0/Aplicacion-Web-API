@@ -49,17 +49,9 @@ class TxdDenunciaS(serializers.ModelSerializer):
     class Meta:
         model = models.TxdDenuncia
 
-class TxdDiaS(serializers.ModelSerializer):
+class TxdHorariodetalleS(serializers.ModelSerializer):
     class Meta:
-        model = models.TxdDia
-
-class TxdDiahorarioS(serializers.ModelSerializer):
-    class Meta:
-        model = models.TxdDiahorario
-
-class TxdDiahorariodetalleS(serializers.ModelSerializer):
-    class Meta:
-        model = models.TxdDiahorariodetalle
+        model = models.TxdHorariodetalle
 
 class TxdDuenioS(serializers.ModelSerializer):
     class Meta:

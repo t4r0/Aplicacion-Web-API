@@ -17,7 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework import routers
 from rest_framework.urlpatterns import format_suffix_patterns
-from app.vistas import vistaDuenio, vistaRuta, vistaHorario, vistaDenuncia, vistaTipodenuncia, vistaActividad,vistaConsejo, vistaFechaConsejo, vistaBus, vistaDia, vistaRecurso, vistaChofer, vistaDiaHorario
+from app.vistas import vistaDuenio, vistaRuta, vistaHorario, vistaDenuncia, vistaTipodenuncia, vistaActividad,vistaConsejo, vistaFechaConsejo, vistaBus, vistaRecurso, vistaChofer, vistaHorariodetalle
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -33,23 +33,19 @@ urlpatterns = [
     url(r'^bus/$', vistaBus.lista_objetos),
     url(r'^bus/(?P<pk>[0-9]+)$', vistaBus.detalle_objetos),
     url(r'^duenio/bus/(?P<pk>[0-9]+)/editar/$', vistaBus.detalle_objetos),
-    url(r'^dia/$', vistaDia.lista_objetos),
-    url(r'^dia/(?P<pk>[0-9]+)$', vistaDia.detalle_objetos),
     url(r'^recurso/$', vistaRecurso.lista_objetos),
     url(r'^recurso/(?P<pk>[0-9]+)$', vistaRecurso.detalle_objetos),
     url(r'^horario/$', vistaHorario.lista_objetos),
     url(r'^horario/(?P<pk>[0-9]+)$', vistaHorario.detalle_objetos),
+    url(r'^horariodetalle/$', vistaHorariodetalle.lista_objetos),
+    url(r'^horariodetalle/(?P<pk>[0-9]+)$', vistaHorariodetalle.detalle_objetos),
     url(r'^denuncia/$', vistaDenuncia.lista_objetos),
     url(r'^denuncia/(?P<pk>[0-9]+)$', vistaDenuncia.detalle_objetos),
     url(r'^operador/denuncias/ruta/(?P<pk>[0-9]+)$', vistaDenuncia.detalle_objetos),
     url(r'^tipodenuncia/$', vistaTipodenuncia.lista_objetos),
-
     url(r'^chofer/$', vistaChofer.lista_objetos),
     url(r'^chofer/(?P<pk>[0-9]+)$', vistaChofer.detalle_objetos),
     url(r'^duenio/piloto/(?P<pk>[0-9]+)/editar/$', vistaChofer.detalle_objetos),
-    url(r'^diahorario/$', vistaDiaHorario.lista_objetos),
-    url(r'^diahorario/(?P<pk>[0-9]+)$', vistaDiaHorario.detalle_objetos),
-
     #url(r'^tipodenuncia/(?P<pk>[0-9]+)$', vistaTipodenuncia.detalle_objetos),
     #url(r'^tipodiahorariodetalle/$', vistadiahorariodetalle.lista_objetos),
     #url(r'^tipodiahorariodetalle/(?P<pk>[0-9]+)$', vistadiahorariodetalle.detalle_objetos),

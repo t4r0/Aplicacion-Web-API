@@ -169,15 +169,6 @@ class TxdDenuncia(models.Model):
     class Meta:
         db_table = 'txd_denuncia'
 
-
-class TxdDia(models.Model):
-    iddia = models.AutoField(db_column='idDia', primary_key=True)  # Field name made lowercase.
-    nombre = models.CharField(max_length=10)
-
-    class Meta:
-        db_table = 'txd_dia'
-
-
 class TxdHorario(models.Model):
     idhorario = models.AutoField(db_column='idHorario', primary_key=True)  # Field name made lowercase.
     horainicio = models.TimeField()
@@ -188,23 +179,15 @@ class TxdHorario(models.Model):
         db_table = 'txd_horario'
 
 
-class TxdDiahorario(models.Model):
-    iddiahorario = models.AutoField(db_column='idDiaHorario', primary_key=True)  # Field name made lowercase.
-    horario = models.ForeignKey(TxdHorario, models.DO_NOTHING, db_column='Horario_id')  # Field name made lowercase.
-    dia = models.ForeignKey(TxdDia, models.DO_NOTHING, db_column='Dia_id')  # Field name made lowercase.
-
-    class Meta:
-        db_table = 'txd_diahorario'
-
-
-class TxdDiahorariodetalle(models.Model):
-    iddiahorariodetalle = models.AutoField(db_column='idDiaHorarioDetalle', primary_key=True)  # Field name made lowercase.
+class TxdHorariodetalle(models.Model):
+    idhorariodetalle = models.AutoField(db_column='idHorarioDetalle', primary_key=True)  # Field name made lowercase.
     bus = models.ForeignKey(TxdBus, models.DO_NOTHING, db_column='Bus_id')  # Field name made lowercase.
     chofer = models.ForeignKey(TxdChofer, models.DO_NOTHING, db_column='Chofer_id')  # Field name made lowercase.
-    diahorario = models.ForeignKey(TxdDiahorario, models.DO_NOTHING, db_column='DiaHorario_id')  # Field name made lowercase.
+    horario = models.ForeignKey(TxdHorario, models.DO_NOTHING, db_column='Horario_id')  # Field name made lowercase.
+    fecha = models.DateField()
 
     class Meta:
-        db_table = 'txd_diahorariodetalle'
+        db_table = 'txd_horariodetalle'
 
 
 class TxdRecurso(models.Model):
