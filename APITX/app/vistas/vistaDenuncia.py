@@ -1,7 +1,8 @@
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from app.models import TxdDenuncia
+from django.core.exceptions import ObjectDoesNotExist
+from app.models import TxdDenuncia,TxdBus
 from app.serializables import TxdDenunciaS
 
 
@@ -17,8 +18,17 @@ def lista_objetos(request):
 
     elif request.method == 'POST':
         serializador = TxdDenunciaS(data=request.data)
+        placa = request.data['placa']
+        respuesta ={"denuncia": {"estado": "rechazada"}}
+        try:
+            bus = TxdBus.objects.get(placa=placa)
+        except ObjectDoesNotExist:
+            return Response(respuesta, status=status.HTTP_406_NOT_ACCEPTABLE)
+
         if serializador.is_valid():
             serializador.save()
+            i = serializador.pk
+            respuesta ={"denuncia":{"estado": "realizada", "id": i }}
             return Response(serializador.data, status=status.HTTP_201_CREATED)
         return Response(serializador.errors, status=status.HTTP_400_BAD_REQUEST)
 
