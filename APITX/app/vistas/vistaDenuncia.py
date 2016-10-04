@@ -53,8 +53,9 @@ def detalle_objetos(request, pk):
     """
     try:
         objeto = TxdDenuncia.objects.get(pk=pk)
-    except objeto.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+    except ObjectDoesNotExist:
+        respuesta ={'denuncia': {'estado': 'no existe denuncia'}}
+        return Response(respuesta,status=status.HTTP_204_NO_CONTENT)
 
     if request.method == 'GET':
         serializador = TxdDenunciaS(objeto)
@@ -64,7 +65,8 @@ def detalle_objetos(request, pk):
         serializador = TxdDenunciaS(objeto, data=request.data)
         if serializador.is_valid():
             serializador.save()
-            return Response(serializador.data)
+            respuesta ={'denuncia': {'estado': 'se actualizo la denuncia'}}
+            return Response(respuesta, status=status.HTTP_202_ACCEPTED)
         return Response(serializador.errors, status=status.HTTP_400_BAD_REQUEST)
 
     elif request.method == 'DELETE':
